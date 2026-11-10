@@ -1,0 +1,7 @@
+data/raw/
+__pycache__/
+*.pyc
+data/*.dropped
+data/gen.log
+data/emails_smoke.jsonl*
+src/dbg_gen.py
