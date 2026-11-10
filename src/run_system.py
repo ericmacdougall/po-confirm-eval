@@ -64,16 +64,33 @@ class LlamaServer:
     """llama.cpp llama-server (OpenAI-compatible) over HTTP. Used for the GPU host; same cache and prompts."""
 
     def __init__(self, url, tag):
+        from runtime_identity import validate_endpoint
+        validate_endpoint(url)
         self.url, self.tag = url.rstrip("/"), tag
+        self.metadata = json.load(open(os.path.join(ROOT, "docs", "MODELS.json")))
+        self.identity = self.check_identity()
+
+    def check_identity(self):
+        import urllib.request
+        from runtime_identity import cache_identity
+        props = json.load(urllib.request.urlopen(self.url + "/props", timeout=15))
+        return cache_identity(props, self.tag, self.metadata)
 
     def chat(self, messages, max_tokens=320):
         import urllib.request
-        key = hashlib.sha256((self.tag + json.dumps(messages) + str(max_tokens)).encode()).hexdigest()
+        identity = self.check_identity()  # refuse a restarted/swapped server before even opening a cache file
+        if identity != self.identity:
+            raise ValueError("Runtime identity changed during the experiment")
+        backend = self.metadata["backend"]
+        if max_tokens != backend["max_completion_tokens"]:
+            raise ValueError("Completion limit differs from frozen decoding")
+        key = hashlib.sha256((identity + json.dumps(messages) + str(max_tokens)).encode()).hexdigest()
         p = os.path.join(CACHE, key[:2], key + ".json")
         if os.path.exists(p):
             return json.load(open(p))
         t = time.time()
-        body = json.dumps(dict(messages=messages, max_tokens=max_tokens, temperature=0, seed=7)).encode()
+        body = json.dumps(dict(messages=messages, max_tokens=max_tokens,
+                               temperature=backend["temperature"], seed=backend["seed"])).encode()
         req = urllib.request.Request(self.url + "/v1/chat/completions", body, {"Content-Type": "application/json"})
         o = json.load(urllib.request.urlopen(req, timeout=600))
         r = dict(text=o["choices"][0]["message"]["content"], tokens=o["usage"]["completion_tokens"],
@@ -163,8 +180,16 @@ def main():
     ap.add_argument("--k", type=int, default=3)
     ap.add_argument("--open-heldout", default=None)
     a = ap.parse_args()
-    guard_heldout(a.split, a.open_heldout)
     tag = a.tag or f"{a.system}-{a.prompt}"
+    if a.split in ("h1", "h2"):
+        selection = json.load(open(os.path.join(ROOT, "docs", "SELECTION.json")))
+        allowed = {("s0", "v1", "s0-v1"), (selection["system"], selection["prompt"], selection["candidate"])}
+        if (a.system, a.prompt, tag) not in allowed:
+            sys.exit("REFUSED: held-out system/prompt/tag is not the pre-selected experiment")
+        if a.system != "s0" and (not os.environ.get("LABE_SERVER_URL") or
+                                   os.environ.get("LABE_MODEL_TAG", selection["model"]) != selection["model"]):
+            sys.exit("REFUSED: held-out inference needs the frozen server model identity")
+    guard_heldout(a.split, a.open_heldout)
     cases = {c["id"]: c for c in jl_read(os.path.join(DATA, "cases.jsonl"))}
     emails = {e["id"]: e for e in jl_read(os.path.join(DATA, "emails.jsonl"))}
     ids = sorted(i for i in emails if cases[i]["split"] == a.split)
@@ -188,7 +213,7 @@ def main():
         if i in done:
             continue
         r = run_one(a.system, llm, a.prompt, emails[i], demos_for)
-        r.update(id=i, system=tag, model=getattr(llm, "tag", "rules"))
+        r.update(id=i, system=tag, model=getattr(llm, "tag", "rules"), runtime_identity=getattr(llm, "identity", None))
         with open(out, "a") as f:
             f.write(json.dumps(r, sort_keys=True) + "\n")
         if n % 20 == 0:

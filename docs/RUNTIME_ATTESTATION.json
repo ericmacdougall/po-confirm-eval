@@ -1,0 +1,21 @@
+{
+  "observed_at_utc": "2026-11-10T06:12:05.949167+00:00",
+  "host_role": "owned RTX3090 GPU host",
+  "method": "SSH Windows Get-FileHash SHA256 of actual server binaries and GGUF files; HTTP /props from the serving process",
+  "files_sha256": {
+    "qwen2.5-3b-instruct-q4_k_m.gguf": "626b4a6678b86442240e33df819e00132d3ba7dddfe1cdc4fbb18e0a9615c62d",
+    "qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf": "dfce12e3862a5283ccfb88221b48480e58745165de856439950d0f22590580db",
+    "qwen2.5-7b-instruct-q4_k_m-00002-of-00002.gguf": "539cf93f78e887edea1c04e2d7d8cdaca9d01dae9c9025bcb8accbe29df3d72a",
+    "llama-server.exe": "4b0435825a7a55c7f80146aa483375ed5674057dd551383a66f5500fea95eae1",
+    "llama-server-impl.dll": "34947d1c5243d1edec419604c868d0acdf1fb208fadf35bcaa77ae945f2107f4",
+    "llama.dll": "7d53514e7d06fad3318b91fc0b4fe5a3f38b8c314e8057e87fbfb730457dbaef"
+  },
+  "props": {
+    "build_info": "b12242-3b4d6ab3f",
+    "model_path": "C:\\lab-e\\models\\qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+    "model_alias": "C:\\lab-e\\models\\qwen2.5-7b-instruct-q4_k_m-00001-of-00002.gguf",
+    "total_slots": 4
+  },
+  "per_slot_context": 4096,
+  "limit": "Operational observation on an owned host, not cryptographic remote attestation; server HTTP properties do not themselves hash weight contents."
+}

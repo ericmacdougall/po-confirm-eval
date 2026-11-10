@@ -105,3 +105,7 @@ statistical evaluation run on a48-vCPU AMD EPYC7502 remote host.
 
 Any implementation change after opening must be disclosed; no silent refreeze
 may be used to promote exploratory tuning to held-out confirmation.
+
+## Pre-opening inspection repair
+
+Before any H1/H2 predictions, independent inspection required stronger runtime binding. The revised freeze records actual owned-host GGUF and server-binary SHA256 observations in RUNTIME_ATTESTATION.json. Each model call checks the live /props model alias/path, build and context before reading cache or inferring; cache identity includes weight hashes, backend and decoding parameters. Only the selected model/system/prompt/tag or rules baseline can run H1/H2. The first pre-opening manifest is retained under docs/freeze-history. The candidate, data, metrics and thresholds did not change. HTTP properties do not cryptographically prove loaded weights; the weight hash is an operational observation on the owned host.
