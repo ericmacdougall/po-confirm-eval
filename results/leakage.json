@@ -1,0 +1,25 @@
+{
+  "method": "deliberately invalid held-out answer lookup; constructed pedagogical contamination",
+  "h1_original_accuracy": [
+    0.9933333333333333,
+    0.9805846656696399,
+    0.9977302353883505
+  ],
+  "h1_leaked_accuracy": [
+    1.0,
+    0.9915353726939092,
+    1.0
+  ],
+  "h2_original_accuracy": [
+    0.9910913140311804,
+    0.9773201155161613,
+    0.9965303434522728
+  ],
+  "h2_leaked_lookup_fallback_accuracy": [
+    0.9910913140311804,
+    0.9773201155161613,
+    0.9965303434522728
+  ],
+  "independent_confirmation": false,
+  "lesson": "Perfect scores on a memorized test set establish no new extraction capability. Only untouched data can test the modified system."
+}

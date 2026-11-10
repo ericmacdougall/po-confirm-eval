@@ -1,0 +1,279 @@
+{
+  "h1": {
+    "verdict": "SHIP",
+    "failures": [],
+    "info": {
+      "false_confirm": {
+        "point": 0.0035211267605633804,
+        "upper": 0.019672675321439508
+      },
+      "accuracy_diff": {
+        "diff": 0.06,
+        "lo": 0.03777777777777778,
+        "hi": 0.08444444444444445,
+        "p_le_0": 0.0,
+        "n": 450
+      },
+      "supplier_cluster_accuracy_diff": {
+        "diff": 0.06,
+        "lo": 0.037122969837587005,
+        "hi": 0.08288770053475936,
+        "n_clusters": 272,
+        "replicates": 2000
+      },
+      "slice_violations": [],
+      "automation_recall": {
+        "candidate": 0.9879518072289156,
+        "baseline": 0.8795180722891566
+      }
+    }
+  },
+  "h2": {
+    "verdict": "SHIP",
+    "failures": [],
+    "info": {
+      "false_confirm": {
+        "point": 0.003401360544217687,
+        "upper": 0.019012449042384225
+      },
+      "accuracy_diff": {
+        "diff": 0.062360801781737196,
+        "lo": 0.0400890868596882,
+        "hi": 0.08685968819599109,
+        "p_le_0": 0.0,
+        "n": 449
+      },
+      "supplier_cluster_accuracy_diff": {
+        "diff": 0.062360801781737196,
+        "lo": 0.036585365853658534,
+        "hi": 0.09273182957393483,
+        "n_clusters": 271,
+        "replicates": 2000
+      },
+      "slice_violations": [],
+      "automation_recall": {
+        "candidate": 0.9806451612903225,
+        "baseline": 0.864516129032258
+      }
+    }
+  },
+  "controls": {
+    "control-oracle": {
+      "verdict": "SHIP",
+      "failures": [],
+      "info": {
+        "false_confirm": {
+          "point": 0.0,
+          "upper": 0.013346229315012146
+        },
+        "accuracy_diff": {
+          "diff": 0.06666666666666667,
+          "lo": 0.044444444444444446,
+          "hi": 0.09111111111111111,
+          "p_le_0": 0.0,
+          "n": 450
+        },
+        "supplier_cluster_accuracy_diff": {
+          "diff": 0.06666666666666667,
+          "lo": 0.045454545454545456,
+          "hi": 0.08955223880597014,
+          "n_clusters": 272,
+          "replicates": 2000
+        },
+        "slice_violations": [],
+        "automation_recall": {
+          "candidate": 1.0,
+          "baseline": 0.8795180722891566
+        }
+      }
+    },
+    "canary-always_confirm": {
+      "verdict": "BLOCK",
+      "failures": [
+        "safety: false-confirm upper bound 1.000 > 0.06",
+        "no_regress: conservative diff CI lower -0.618 < -0.01",
+        "slice_floor: ambiguous: 0.00 vs 1.00 (n=37); date_late: 0.00 vs 1.00 (n=22); offtopic: 0.00 vs 1.00 (n=22); price_diff: 0.00 vs 1.00 (n=40); qty_diff: 0.00 vs 1.00 (n=56); reject: 0.00 vs 0.94 (n=50); substitution: 0.00 vs 0.83 (n=23); unknown_po: 0.00 vs 0.86 (n=21)"
+      ],
+      "info": {
+        "false_confirm": {
+          "point": 1.0,
+          "upper": 1.0
+        },
+        "accuracy_diff": {
+          "diff": -0.5644444444444444,
+          "lo": -0.6177777777777778,
+          "hi": -0.5111111111111111,
+          "p_le_0": 1.0,
+          "n": 450
+        },
+        "supplier_cluster_accuracy_diff": {
+          "diff": -0.5644444444444444,
+          "lo": -0.6151960784313726,
+          "hi": -0.5109170305676856,
+          "n_clusters": 272,
+          "replicates": 2000
+        },
+        "slice_violations": [
+          "ambiguous: 0.00 vs 1.00 (n=37)",
+          "date_late: 0.00 vs 1.00 (n=22)",
+          "offtopic: 0.00 vs 1.00 (n=22)",
+          "price_diff: 0.00 vs 1.00 (n=40)",
+          "qty_diff: 0.00 vs 1.00 (n=56)",
+          "reject: 0.00 vs 0.94 (n=50)",
+          "substitution: 0.00 vs 0.83 (n=23)",
+          "unknown_po: 0.00 vs 0.86 (n=21)"
+        ],
+        "automation_recall": {
+          "candidate": 1.0,
+          "baseline": 0.8795180722891566
+        }
+      }
+    },
+    "canary-always_human": {
+      "verdict": "BLOCK",
+      "failures": [
+        "no_regress: conservative diff CI lower -0.469 < -0.01",
+        "slice_floor: exact: 0.00 vs 0.87 (n=117); exact_nodate: 0.00 vs 0.89 (n=38); reject: 0.00 vs 0.94 (n=50)",
+        "automation: recall 0.000 < baseline 0.880 - 0.03"
+      ],
+      "info": {
+        "false_confirm": {
+          "point": 0.0,
+          "upper": 0.013346229315012146
+        },
+        "accuracy_diff": {
+          "diff": -0.41333333333333333,
+          "lo": -0.4622222222222222,
+          "hi": -0.36444444444444446,
+          "p_le_0": 1.0,
+          "n": 450
+        },
+        "supplier_cluster_accuracy_diff": {
+          "diff": -0.41333333333333333,
+          "lo": -0.46904761904761905,
+          "hi": -0.3638344226579521,
+          "n_clusters": 272,
+          "replicates": 2000
+        },
+        "slice_violations": [
+          "exact: 0.00 vs 0.87 (n=117)",
+          "exact_nodate: 0.00 vs 0.89 (n=38)",
+          "reject: 0.00 vs 0.94 (n=50)"
+        ],
+        "automation_recall": {
+          "candidate": 0.0,
+          "baseline": 0.8795180722891566
+        }
+      }
+    },
+    "canary-price_drift": {
+      "verdict": "BLOCK",
+      "failures": [
+        "no_regress: conservative diff CI lower -0.352 < -0.01",
+        "slice_floor: exact: 0.00 vs 0.87 (n=117); exact_nodate: 0.00 vs 0.89 (n=38)",
+        "automation: recall 0.000 < baseline 0.880 - 0.03"
+      ],
+      "info": {
+        "false_confirm": {
+          "point": 0.0,
+          "upper": 0.013346229315012146
+        },
+        "accuracy_diff": {
+          "diff": -0.3022222222222222,
+          "lo": -0.3488888888888889,
+          "hi": -0.2577777777777778,
+          "p_le_0": 1.0,
+          "n": 450
+        },
+        "supplier_cluster_accuracy_diff": {
+          "diff": -0.3022222222222222,
+          "lo": -0.3518930957683742,
+          "hi": -0.2561247216035635,
+          "n_clusters": 272,
+          "replicates": 2000
+        },
+        "slice_violations": [
+          "exact: 0.00 vs 0.87 (n=117)",
+          "exact_nodate: 0.00 vs 0.89 (n=38)"
+        ],
+        "automation_recall": {
+          "candidate": 0.0,
+          "baseline": 0.8795180722891566
+        }
+      }
+    },
+    "canary-drop_last_line": {
+      "verdict": "BLOCK",
+      "failures": [
+        "no_regress: conservative diff CI lower -0.077 < -0.01",
+        "slice_floor: exact: 0.71 vs 0.87 (n=117); exact_nodate: 0.76 vs 0.89 (n=38)",
+        "automation: recall 0.711 < baseline 0.880 - 0.03"
+      ],
+      "info": {
+        "false_confirm": {
+          "point": 0.0,
+          "upper": 0.013346229315012146
+        },
+        "accuracy_diff": {
+          "diff": -0.04,
+          "lo": -0.07555555555555556,
+          "hi": -0.0044444444444444444,
+          "p_le_0": 0.9897,
+          "n": 450
+        },
+        "supplier_cluster_accuracy_diff": {
+          "diff": -0.04,
+          "lo": -0.07692307692307693,
+          "hi": -0.0045871559633027525,
+          "n_clusters": 272,
+          "replicates": 2000
+        },
+        "slice_violations": [
+          "exact: 0.71 vs 0.87 (n=117)",
+          "exact_nodate: 0.76 vs 0.89 (n=38)"
+        ],
+        "automation_recall": {
+          "candidate": 0.7108433734939759,
+          "baseline": 0.8795180722891566
+        }
+      }
+    },
+    "canary-shuffled": {
+      "verdict": "BLOCK",
+      "failures": [
+        "no_regress: conservative diff CI lower -0.469 < -0.01",
+        "slice_floor: exact: 0.00 vs 0.87 (n=117); exact_nodate: 0.00 vs 0.89 (n=38); reject: 0.00 vs 0.94 (n=50)",
+        "automation: recall 0.000 < baseline 0.880 - 0.03"
+      ],
+      "info": {
+        "false_confirm": {
+          "point": 0.0,
+          "upper": 0.013346229315012146
+        },
+        "accuracy_diff": {
+          "diff": -0.41333333333333333,
+          "lo": -0.4622222222222222,
+          "hi": -0.36444444444444446,
+          "p_le_0": 1.0,
+          "n": 450
+        },
+        "supplier_cluster_accuracy_diff": {
+          "diff": -0.41333333333333333,
+          "lo": -0.46904761904761905,
+          "hi": -0.3638344226579521,
+          "n_clusters": 272,
+          "replicates": 2000
+        },
+        "slice_violations": [
+          "exact: 0.00 vs 0.87 (n=117)",
+          "exact_nodate: 0.00 vs 0.89 (n=38)",
+          "reject: 0.00 vs 0.94 (n=50)"
+        ],
+        "automation_recall": {
+          "candidate": 0.0,
+          "baseline": 0.8795180722891566
+        }
+      }
+    }
+  }
+}
