@@ -153,3 +153,16 @@ Original src/reproduce.py is retained as historical reproduction-only code.
 The corrected runner forbids historical splits/tags and path escapes.
 Full stable remote validation and fresh exact-HEAD review are recorded after
 code inspection; no new confirmation or retroactive preregistration is claimed.
+
+
+Stable corrected replay observed on the compute host after independent code
+inspection PASS at a0c006af617110e7dc222c36bd2cabd272ee8111:
+python3 rerun.py exited0 (32.29seconds for this replay, not a service benchmark);
+original18 focused controls and corrected8 controls passed. The original replay
+and separate accounting both completed. All31 frozen artifacts and65 original
+record/manifests verified unchanged before/after. The git-archive SHA was
+b680658a592f13843c84cf4d786065a48949380692e9dc330fd0afc9cef770e2.
+Commands and redacted logs are in accounting/validation/. Corrected metric files
+now retain the stable compute-host output; only descriptive mean-latency final
+floating digits differed from the preliminary local accounting replay. No
+quality statistic, prediction, code, original result or gate decision changed.

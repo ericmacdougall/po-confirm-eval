@@ -1130,7 +1130,7 @@
     "h2-01798": "brla|Ems Technology Solutions Llc",
     "h2-01799": "oregon|American Textile & Supply Inc."
   },
-  "latency_s_mean": 2.146881959910914,
+  "latency_s_mean": 2.1468819599109135,
   "abstain_rate": 0.0022271714922048997,
   "parse_fail_rate": 0.0022271714922048997,
   "accounting_version": "post-opening-parse-v1",

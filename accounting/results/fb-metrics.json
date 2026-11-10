@@ -950,7 +950,7 @@
     "fb-02158": "brla|Greg Declouet",
     "fb-02159": "brla|Gaylord Archival"
   },
-  "latency_s_mean": 2.2493593314763216,
+  "latency_s_mean": 2.249359331476323,
   "abstain_rate": 0.002785515320334262,
   "parse_fail_rate": 0.002785515320334262,
   "accounting_version": "post-opening-parse-v1",
