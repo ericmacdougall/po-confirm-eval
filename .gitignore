@@ -12,3 +12,5 @@ data/real_*.jsonl
 runs/*real*.jsonl
 runs/log_*.txt
 runs/shards_*.log
+accounting/work/
+accounting/future-runs/

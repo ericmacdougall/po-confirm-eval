@@ -17,23 +17,34 @@ distributed. Code is MIT; separate data/model terms are recorded in
 With Python3.12, from this directory:
 
 ```sh
-python3 src/reproduce.py
+python3 rerun.py
 ```
 
-This verifies the frozen input hashes, recomputes metrics and confidence
+This replays the immutable original experiment in an isolated copy, then runs
+the [post-opening parse-accounting correction](docs/ACCOUNTING_ERRATUM.md).
+It verifies the frozen input hashes, recomputes metrics and confidence
 intervals, runs the gate on both held-out sets, and proves that five broken
 systems are blocked while an artificial correctness oracle passes. It also
 regenerates the feedback and deliberate test-contamination demonstrations.
 A candidate BLOCK is a scientific result; replay success does not force a
 candidate to pass. The command refuses missing prediction rows.
 
+**`src/` and `tests/` are frozen historical reproduction code.** A final review
+found that the historical scorer hid failed JSON extraction behind a nonempty
+human-escalation fallback. Do not use that scorer as a current release-control
+reference. The corrected extraction wrapper and scorer live in `accounting/`;
+the original 31 bound files, predictions and results remain byte-identical.
+The original snapshot is also preserved in `original/experiment-08f8afc.zip`.
+Corrected results are written only to `accounting/results/`.
+
 Focused safety checks, without any model server:
 
 ```sh
 python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s accounting/tests -v
 ```
 
-For new inference, first serve the exact7B GGUF files listed in MODELS.json with
+For a future development experiment, first serve the exact7B GGUF files listed in MODELS.json with
 llama.cpp build12242, commit3b4d6ab3f. The recorded setup uses four parallel
 slots and16,384 total context tokens (4,096 per slot), on one RTX3090. Use
 localhost or an SSH tunnel to an owned host; do not expose an unauthenticated
@@ -44,12 +55,15 @@ model metadata. The original operational file-hash receipt is in
 ```sh
 export LABE_SERVER_URL=http://127.0.0.1:8081
 export LABE_MODEL_TAG=qwen2.5-7b-instruct-q4_k_m
-python3 src/reproduce.py --infer
+python3 -m accounting.runner --system s2 --prompt v2 --split dev --tag future-example
 ```
 
-Existing complete shards resume without duplicate items. To perform independent
-fresh inference, use a separate copy of the frozen source/data with an empty
-`runs/` and `llm-io/` directory. Do not change the frozen artifacts. HTTP server
+The corrected wrapper writes only to `accounting/future-runs/`, requires a safe
+`future-*` tag, and refuses historical held-out/feedback/real splits. Score its
+rows with `accounting.scoring.evaluate_rows`, which requires explicit final
+parse/schema status. This is a future development path, not another confirmation
+on the already-opened H1/H2. A new evaluation needs a separately registered
+experiment and untouched test data. Do not change these frozen artifacts. HTTP server
 properties do not cryptographically attest the loaded weights; reproducing the
 experiment still requires verifying the actual files on your owned host.
 
@@ -106,6 +120,8 @@ Behavior slices are engineering tripwires, not simultaneous subgroup inference.
 
 The research gate checks complete coverage, sample size, unsafe-confirm upper
 bound, parse failures, non-inferiority, automation recall and slice regression.
+The original parse-failure implementation was defective; the separate corrected
+accounting below is now the release-control reference.
 Always-human cannot pass by avoiding all risky work. Its6% safety ceiling is
 an illustrative lab threshold, **not** authorization for autonomous purchasing.
 
@@ -122,6 +138,18 @@ research gates passed. All five deliberately broken systems were blocked;
 the constructed oracle passed. Feedback359 produced two new regression cases,
 expanding the development suite from595 to597. These are simulated support
 cases, not observed customer reports.
+
+After opening, a final review found an accounting bug: failed JSON/schema
+extraction could become a nonempty abstention dictionary and incorrectly count
+as successful parsing. Six exact cached retries recover the missing final raw
+responses without inference. Corrected final parse failures are **1/450 in H1
+(0.2222%), 1/449 in H2 (0.2227%), and 1/359 in feedback (0.2786%)**.
+Accuracy, automation, fields, safety errors and gate verdicts are unchanged.
+This is a post-opening measurement/control correction, not fresh confirmation.
+A constructed control adds thirty parse failures to already-correct human
+escalations: the old gate still says SHIP; corrected accounting sees31/450
+failures (6.8889%) and BLOCKS while accuracy and automation remain identical.
+See [the erratum](docs/ACCOUNTING_ERRATUM.md) and `accounting/results/report.json`.
 
 ![Held-out correctness and unsafe-confirm rates with uncertainty](results/heldout-comparison.png)
 

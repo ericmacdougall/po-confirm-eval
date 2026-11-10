@@ -1,0 +1,68 @@
+[
+  {
+    "id": "h1-01087",
+    "split": "h1",
+    "cache_key": "529d916808967c727235e38992be303b99e681fafde18b5801198689cffa7512",
+    "path": "52/529d916808967c727235e38992be303b99e681fafde18b5801198689cffa7512.json",
+    "first_parsed": true,
+    "first_reason": "intent is confirm but no lines were extracted. Extract the stated lines or set intent to other.",
+    "abstained": false,
+    "file": "accounting/evidence/retries/529d916808967c727235e38992be303b99e681fafde18b5801198689cffa7512.json",
+    "sha256": "e185b8a138112133aa9e547e2bd5f67bc856e4437c9d935fc03347d05b33600f"
+  },
+  {
+    "id": "h1-01163",
+    "split": "h1",
+    "cache_key": "b3906725591d6e7da44b7cc362a0598475d0ce74827ed47c90b3ff0ab5dbb495",
+    "path": "b3/b3906725591d6e7da44b7cc362a0598475d0ce74827ed47c90b3ff0ab5dbb495.json",
+    "first_parsed": false,
+    "first_reason": "Your reply was not a single valid JSON object. Return only the JSON.",
+    "abstained": true,
+    "file": "accounting/evidence/retries/b3906725591d6e7da44b7cc362a0598475d0ce74827ed47c90b3ff0ab5dbb495.json",
+    "sha256": "4e4cecd68e756da192efd56e638461e489713395f7ffc364d211475065636416"
+  },
+  {
+    "id": "h2-01488",
+    "split": "h2",
+    "cache_key": "12ce549e1910c83c3c4ff2a9af38fd99c0fac112888483224554e8241afdfa29",
+    "path": "12/12ce549e1910c83c3c4ff2a9af38fd99c0fac112888483224554e8241afdfa29.json",
+    "first_parsed": true,
+    "first_reason": "intent is confirm but no lines were extracted. Extract the stated lines or set intent to other.",
+    "abstained": false,
+    "file": "accounting/evidence/retries/12ce549e1910c83c3c4ff2a9af38fd99c0fac112888483224554e8241afdfa29.json",
+    "sha256": "c74091ac7af46b35b63eba9c8a70db19465b50144717ae424fc0ccdce9e8f5b1"
+  },
+  {
+    "id": "h2-01612",
+    "split": "h2",
+    "cache_key": "f61f7b29aa73867aea8234e130a52c1578c0e0d7f9b88eaea6871929c26e307f",
+    "path": "f6/f61f7b29aa73867aea8234e130a52c1578c0e0d7f9b88eaea6871929c26e307f.json",
+    "first_parsed": false,
+    "first_reason": "Your reply was not a single valid JSON object. Return only the JSON.",
+    "abstained": true,
+    "file": "accounting/evidence/retries/f61f7b29aa73867aea8234e130a52c1578c0e0d7f9b88eaea6871929c26e307f.json",
+    "sha256": "7f102789ca09af574887ecda58fa562cbfb59bac50bab44ecca9d228dc2061a0"
+  },
+  {
+    "id": "fb-01994",
+    "split": "fb",
+    "cache_key": "d641d7f097c29122f8b3436f4f707e3c4895434a6cf8fe8e2539662f07411098",
+    "path": "d6/d641d7f097c29122f8b3436f4f707e3c4895434a6cf8fe8e2539662f07411098.json",
+    "first_parsed": false,
+    "first_reason": "Your reply was not a single valid JSON object. Return only the JSON.",
+    "abstained": true,
+    "file": "accounting/evidence/retries/d641d7f097c29122f8b3436f4f707e3c4895434a6cf8fe8e2539662f07411098.json",
+    "sha256": "5c0df4f2235c49d4060d86496609eabc9d61f452932c31eefd75ad622c3549ad"
+  },
+  {
+    "id": "fb-02028",
+    "split": "fb",
+    "cache_key": "56daa91d2916fd99813f58f46ad43c596801e9fa6cd95f6632793b846fc90d69",
+    "path": "56/56daa91d2916fd99813f58f46ad43c596801e9fa6cd95f6632793b846fc90d69.json",
+    "first_parsed": true,
+    "first_reason": "intent is confirm but no lines were extracted. Extract the stated lines or set intent to other.",
+    "abstained": false,
+    "file": "accounting/evidence/retries/56daa91d2916fd99813f58f46ad43c596801e9fa6cd95f6632793b846fc90d69.json",
+    "sha256": "7ffcaeade46395a3e67c57a60c041dc85c8649d8095a7dc85efebddec5ef714f"
+  }
+]

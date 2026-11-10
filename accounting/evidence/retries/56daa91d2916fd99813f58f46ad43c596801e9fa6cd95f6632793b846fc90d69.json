@@ -1,0 +1,1 @@
+{"text": "```json\n{\n  \"po_number\": \"PO140313\",\n  \"intent\": \"other\",\n  \"conditions\": false,\n  \"ship_date\": null,\n  \"lines\": []\n}\n```", "tokens": 46, "latency_s": 1.33}

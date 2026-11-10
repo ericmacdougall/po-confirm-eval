@@ -1,0 +1,1 @@
+{"text": "```json\n{\n  \"po_number\": \"PO131725\",\n  \"intent\": \"reject\",\n  \"conditions\": false,\n  \"ship_date\": null,\n  \"lines\": [\n    {\n      \"line\": 1,\n      \"desc\": \"G9 keypad (VFD)\",\n      \"qty\": --,\n      \"unit_price\": --\n    }\n  ]\n}\n```", "tokens": 83, "latency_s": 2.12}

@@ -126,3 +126,30 @@ inference was performed. A frontier extraction reference stopped at a
 subscription limit and was not replaced with invented output. Raw real-email
 text and model weights are not included. Shared-GPU call timings describe
 contention in this experiment and do not establish isolated capacity.
+
+
+## Post-opening parse-accounting correction (2026-11-10)
+
+Final PR review of08f8afc found that a nonempty human-escalation fallback
+concealed a failed final parse from the5% parse-failure gate. The frozen
+experiment is preserved in an immutable full snapshot; its31 bound files and
+all original runs/results remain unchanged. Separate accounting/ code records
+per-attempt raw output, final JSON/normalizer status and validation failure.
+
+Failure-first controls reproduced missing status and0% parse failures despite
+more than5% invalid extractions. After repair, eight focused controls pass.
+All six retry outputs were recovered from exact frozen-runtime cache keys; no
+new inference occurred. Reconciliation finds one final parse failure in each
+of H1(450), H2(449) and feedback(359), with no final parsed-but-invalid
+extractions. Claims, policy decisions, accuracy, field scores, automation,
+safety errors and both gate outcomes are unchanged. A constructed control
+adds30 failures to correct human escalations; the original gate still SHIPs,
+but corrected accounting BLOCKs31/450 failures without any accuracy or
+automation change. See ACCOUNTING_ERRATUM.md for scope and exact evidence.
+
+The recommended current replay is python3 rerun.py. It runs original replay
+in an isolated snapshot copy, then writes corrected accounting separately.
+Original src/reproduce.py is retained as historical reproduction-only code.
+The corrected runner forbids historical splits/tags and path escapes.
+Full stable remote validation and fresh exact-HEAD review are recorded after
+code inspection; no new confirmation or retroactive preregistration is claimed.
