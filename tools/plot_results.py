@@ -33,4 +33,6 @@ for ax in axes:
 fig.suptitle("Real public purchase orders; constructed supplier emails", fontsize=14, weight="bold")
 fig.savefig(root / "results/heldout-comparison.png", dpi=180)
 fig.savefig(root / "results/heldout-comparison.svg")
+svg = root / "results/heldout-comparison.svg"
+svg.write_text("\n".join(line.rstrip() for line in svg.read_text().splitlines()) + "\n")
 print("Wrote PNG and SVG from frozen metrics; no inference rerun.")
