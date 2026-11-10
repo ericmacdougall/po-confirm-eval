@@ -5,7 +5,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from metrics import evaluate, load_cases, paired_bootstrap, RESULTS  # noqa: E402
+from metrics import evaluate, load_cases, paired_bootstrap  # noqa: E402
 
 
 def fmt(w):

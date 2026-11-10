@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import ROOT, DATA, jl_read, sha256_file  # noqa: E402
 import extractors as X  # noqa: E402
 
-MODEL = os.path.join(os.path.expanduser("~"), "lab-e", "models", "qwen2.5-3b-instruct-q4_k_m.gguf")
+MODEL = os.path.join(os.path.expanduser("~"), "lab-e", "models", os.environ.get("LABE_MODEL", "qwen2.5-1.5b-instruct-q4_k_m.gguf"))
 RUNS = os.path.join(ROOT, "runs")
 CACHE = os.path.join(ROOT, "llm-io")
 
@@ -29,6 +29,11 @@ def guard_heldout(split, name):
     pre, shaf = os.path.join(ROOT, "docs", "PREREG.md"), os.path.join(ROOT, "docs", "PREREG.sha256")
     if not name or not os.path.exists(shaf) or open(shaf).read().split()[0] != sha256_file(pre):
         sys.exit(f"REFUSED: {split} is held-out; needs --open-heldout and a PREREG.sha256 matching PREREG.md")
+    from preregister import verify
+    try:
+        verify()
+    except ValueError as exc:
+        sys.exit("REFUSED: " + str(exc))
     os.makedirs(RUNS, exist_ok=True)
     with open(os.path.join(RUNS, "OPEN_LOG.jsonl"), "a") as f:
         f.write(json.dumps(dict(split=split, who=name, at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -39,7 +44,7 @@ class Llama3B:
     def __init__(self, threads):
         from llama_cpp import Llama
         self.m = Llama(model_path=MODEL, n_ctx=4096, n_threads=threads, verbose=False)
-        self.tag = "qwen2.5-3b-instruct-q4_k_m"
+        self.tag = os.path.basename(MODEL).replace(".gguf", "")
 
     def chat(self, messages, max_tokens=320):
         key = hashlib.sha256((self.tag + json.dumps(messages) + str(max_tokens)).encode()).hexdigest()
@@ -55,11 +60,34 @@ class Llama3B:
         return r
 
 
+class LlamaServer:
+    """llama.cpp llama-server (OpenAI-compatible) over HTTP. Used for the GPU host; same cache and prompts."""
+
+    def __init__(self, url, tag):
+        self.url, self.tag = url.rstrip("/"), tag
+
+    def chat(self, messages, max_tokens=320):
+        import urllib.request
+        key = hashlib.sha256((self.tag + json.dumps(messages) + str(max_tokens)).encode()).hexdigest()
+        p = os.path.join(CACHE, key[:2], key + ".json")
+        if os.path.exists(p):
+            return json.load(open(p))
+        t = time.time()
+        body = json.dumps(dict(messages=messages, max_tokens=max_tokens, temperature=0, seed=7)).encode()
+        req = urllib.request.Request(self.url + "/v1/chat/completions", body, {"Content-Type": "application/json"})
+        o = json.load(urllib.request.urlopen(req, timeout=600))
+        r = dict(text=o["choices"][0]["message"]["content"], tokens=o["usage"]["completion_tokens"],
+                 latency_s=round(time.time() - t, 2))
+        os.makedirs(os.path.dirname(p), exist_ok=True)
+        json.dump(r, open(p, "w"))
+        return r
+
+
 class ClaudeRef:
     tag = "claude-sonnet-cli"
 
     def chat(self, messages, max_tokens=320):
-        # flatten to one prompt; claude CLI runs from a neutral dir with user hooks excluded
+        # flatten to one prompt; claude CLI preserves configured user safety settings
         prompt = "\n\n".join(("Assistant: " if m["role"] == "assistant" else "") + m["content"] for m in messages)
         key = hashlib.sha256((self.tag + prompt).encode()).hexdigest()
         p = os.path.join(CACHE, key[:2], key + ".json")
@@ -67,9 +95,9 @@ class ClaudeRef:
             return json.load(open(p))
         t = time.time()
         out = subprocess.run(["claude", "-p", "--model", "sonnet", "--tools", "", "--no-session-persistence",
-                              "--disable-slash-commands", "--setting-sources", "project"], input=prompt,
+                              "--disable-slash-commands"], input=prompt,
                              capture_output=True, text=True, timeout=300,
-                             cwd=os.environ.get("LABE_NEUTRAL_CWD", "/tmp")).stdout
+                             cwd=os.environ.get("LABE_NEUTRAL_CWD", ROOT)).stdout
         r = dict(text=out, tokens=0, latency_s=round(time.time() - t, 2))
         os.makedirs(os.path.dirname(p), exist_ok=True)
         json.dump(r, open(p, "w"))
@@ -99,6 +127,8 @@ def run_one(system, llm, prompt_v, email, demos_for):
     text = X.text_of(email["subject"], email["body"])
     if system == "s0":
         return dict(claims=X.rules_extract(email["subject"], email["body"]), raw="", attempts=0, latency_s=0, completion_tokens=0)
+    if prompt_v == "v2":
+        text = X.supplier_reply(text)
     demos = demos_for(text) if system == "s3" else ""
     pr = X.PROMPTS[prompt_v].replace("{email}", text).replace("{demos}", demos)
     msgs = [{"role": "user", "content": pr}]
@@ -143,7 +173,8 @@ def main():
         ids = ids[:a.limit]
     llm = None
     if a.system in ("s1", "s2", "s3"):
-        llm = Llama3B(a.threads)
+        llm = (LlamaServer(os.environ["LABE_SERVER_URL"], os.environ.get("LABE_MODEL_TAG", "qwen2.5-7b-instruct-q4_k_m"))
+               if os.environ.get("LABE_SERVER_URL") else Llama3B(a.threads))
     elif a.system == "s4":
         llm = ClaudeRef()
     demos_for = None

@@ -1,0 +1,8 @@
+# Python 3.12.3 used for the recorded remote experiments.
+# Core rules, validation, metrics, gate and frozen-result replay use stdlib only.
+# The optional nearest-neighbor few-shot system additionally uses:
+numpy==2.5.4
+scipy==1.18.1
+scikit-learn==1.9.1
+joblib==1.6.0
+threadpoolctl==3.8.0

@@ -1,0 +1,11 @@
+{
+  "max_false_confirm_upper": 0.06,
+  "max_parse_fail": 0.05,
+  "max_regression": 0.01,
+  "require_improvement": false,
+  "slice_min_n": 20,
+  "slice_drop": 0.10,
+  "max_automation_drop": 0.03,
+  "seed": 1,
+  "note": "PROVISIONAL until frozen into PREREG.sha256"
+}

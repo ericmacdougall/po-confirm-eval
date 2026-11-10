@@ -18,10 +18,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from common import jl_read  # noqa: E402
+from common import ROOT, jl_read  # noqa: E402
 
-# Run the CLI from an empty directory with user/project hooks excluded so the model only sees the prompt.
-NEUTRAL_CWD = os.environ.get("LABE_NEUTRAL_CWD", "/tmp")
+# Run the CLI with the configured user safety settings preserved. Prompts contain public or synthetic data only.
+NEUTRAL_CWD = os.environ.get("LABE_NEUTRAL_CWD", ROOT)
 
 STYLE = {
     "terse": "very short, two to four lines, sales-desk shorthand, no greeting fluff",
@@ -104,7 +104,7 @@ def validate(c, e):
 
 def call_claude(prompt, model):
     r = subprocess.run(["claude", "-p", "--model", model, "--tools", "", "--no-session-persistence",
-                        "--disable-slash-commands", "--setting-sources", "project"],
+                        "--disable-slash-commands"],
                        input=prompt, capture_output=True, text=True, timeout=420, cwd=NEUTRAL_CWD)
     return r.stdout
 

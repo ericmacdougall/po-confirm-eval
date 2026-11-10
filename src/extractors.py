@@ -9,6 +9,7 @@ S4  claude_ref   : same prompt as S2 but through the claude CLI (subscription), 
 """
 import json
 import re
+import math
 from datetime import date
 
 MONTHS = {m: i for i, m in enumerate(
@@ -19,6 +20,12 @@ MONEY = re.compile(r"\$\s?([0-9][0-9,]*\.?[0-9]*)")
 
 def text_of(subject, body):
     return f"Subject: {subject}\n\n{body}"
+
+
+def supplier_reply(text):
+    """Conservative reply-on-top boundary; buyer quotes are not supplier evidence."""
+    return re.split(r"\n\s*(?:-{2,}\s*(?:Original|Forwarded)|On .{5,120} wrote:|>\s)",
+                    text, maxsplit=1, flags=re.I)[0]
 
 
 # ---------------------------------------------------------------- dates
@@ -121,22 +128,14 @@ PROMPTS = {
 
 
 def extract_json(txt):
-    """Naive parse used by S1: first balanced {...}."""
+    """Decode the first JSON object, respecting braces inside quoted strings."""
     s = txt.find("{")
     if s < 0:
         return None
-    depth = 0
-    for i in range(s, len(txt)):
-        if txt[i] == "{":
-            depth += 1
-        elif txt[i] == "}":
-            depth -= 1
-            if depth == 0:
-                try:
-                    return json.loads(txt[s:i + 1])
-                except ValueError:
-                    return None
-    return None
+    try:
+        return json.JSONDecoder().raw_decode(txt[s:])[0]
+    except ValueError:
+        return None
 
 
 def normalise(c):
@@ -145,16 +144,22 @@ def normalise(c):
         return None
 
     def num(x):
+        if isinstance(x, bool):
+            return None
         if isinstance(x, (int, float)):
-            return float(x)
+            return float(x) if math.isfinite(x) else None
         if isinstance(x, str):
             try:
-                return float(x.replace("$", "").replace(",", "").strip())
+                value = float(x.replace("$", "").replace(",", "").strip())
+                return value if math.isfinite(value) else None
             except ValueError:
                 return None
         return None
     lines = []
-    for l in c.get("lines") or []:
+    raw_lines = c.get("lines") or []
+    if not isinstance(raw_lines, list):
+        return None
+    for l in raw_lines:
         if isinstance(l, dict):
             ln = l.get("line")
             lines.append(dict(line=ln if isinstance(ln, int) else None, desc=str(l.get("desc") or ""),
@@ -178,7 +183,7 @@ def validate(claims, text):
         if v is None:
             return False
         for f in (f"{v:.2f}", f"{v:g}", str(int(v)) if v == int(v) else f"{v:g}"):
-            if f in flat or f in text.replace(",", ""):
+            if f in flat:
                 return True
         return False
     if claims["po_number"] and claims["po_number"] not in text:
@@ -193,7 +198,7 @@ def validate(claims, text):
             d = date.fromisoformat(claims["ship_date"])
         except ValueError:
             return "ship_date is not YYYY-MM-DD."
-        if str(d.year) not in text or not re.search(r"\b0?%d\b" % d.day, text):
+        if claims["ship_date"] not in {d for _, d in parse_dates(text)}:
             return "ship_date does not match any date written in the email."
     if claims["intent"] == "confirm" and not claims["lines"]:
         return "intent is confirm but no lines were extracted. Extract the stated lines or set intent to other."
