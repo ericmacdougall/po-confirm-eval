@@ -1,0 +1,14 @@
+
+test_final_parse_failure_survives_nonempty_fallback (test_parse_accounting.ParseAccounting.test_final_parse_failure_survives_nonempty_fallback) ... ok
+test_grounding_failure_is_not_parse_failure (test_parse_accounting.ParseAccounting.test_grounding_failure_is_not_parse_failure) ... ok
+test_historical_outputs_and_path_escape_refused_before_model_construction (test_parse_accounting.ParseAccounting.test_historical_outputs_and_path_escape_refused_before_model_construction) ... ok
+test_immutable_original_archive_and_retry_binding (test_parse_accounting.ParseAccounting.test_immutable_original_archive_and_retry_binding) ... ok
+test_invalid_schema_has_separate_status (test_parse_accounting.ParseAccounting.test_invalid_schema_has_separate_status) ... ok
+test_missing_or_inconsistent_status_refuses_scoring (test_parse_accounting.ParseAccounting.test_missing_or_inconsistent_status_refuses_scoring) ... ok
+test_parse_failure_gate_blocks_without_accuracy_or_automation_change (test_parse_accounting.ParseAccounting.test_parse_failure_gate_blocks_without_accuracy_or_automation_change) ... ok
+test_successful_retry_clears_only_final_parse_failure (test_parse_accounting.ParseAccounting.test_successful_retry_clears_only_final_parse_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.580s
+
+OK

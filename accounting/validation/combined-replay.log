@@ -1,0 +1,78 @@
+split=h1  items common to all systems: 450
+system              n doc acc [95% CI]         false-confirm [CI]       auto-recall [CI]         macroF1  lat s  abst
+s0-v1             450 0.933 [0.906,0.953]      0.025 [0.012,0.050]      0.880 [0.821,0.921]        0.941    0.0  0.00
+s2-7b-v3          450 0.993 [0.981,0.998]      0.004 [0.001,0.020]      0.988 [0.957,0.997]        0.995    2.2  0.00
+paired bootstrap s2-7b-v3 - s0-v1: diff=+0.060 95% CI [+0.038,+0.084]  P(diff<=0)=0.0000  n=450
+
+== s0-v1 fields: {'intent': '0.940 [0.914,0.958] n=450', 'po_number': '0.953 [0.930,0.969] n=450', 'ship_date': '0.998 [0.988,1.000] n=450', 'conditions': '0.933 [0.906,0.953] n=450', 'line_qty': '0.934 [0.909,0.952] n=514', 'line_price': '0.940 [0.916,0.957] n=514'}
+   confusion gold->pred: {'confirm->confirm': 146, 'confirm->needs-human': 20, 'reject->reject': 47, 'reject->needs-human': 3, 'needs-human->confirm': 7, 'needs-human->needs-human': 227}
+   slice behaviour: {'ambiguous': '1.00(n=37)', 'date_late': '1.00(n=22)', 'exact': '0.87(n=117)', 'exact_nodate': '0.89(n=38)', 'offtopic': '1.00(n=22)', 'partial': '1.00(n=13)', 'price_diff': '1.00(n=40)', 'qty_diff': '1.00(n=56)', 'reject': '0.94(n=50)', 'substitution': '0.83(n=23)', 'tol_price': '0.91(n=11)', 'unknown_po': '0.86(n=21)'}
+   slice style: {'chatty_typos': '0.86(n=73)', 'formal': '0.98(n=85)', 'forwarded_thread': '0.93(n=72)', 'line_by_line': '0.96(n=75)', 'table': '0.93(n=55)', 'terse': '0.93(n=90)'}
+   slice source: {'brla': '0.95(n=384)', 'oregon': '0.86(n=66)'}
+   slice n_lines: {'1': '0.92(n=292)', '2': '0.95(n=97)', '3': '0.98(n=43)', '4': '0.94(n=18)'}
+
+== s2-7b-v3 fields: {'intent': '1.000 [0.992,1.000] n=450', 'po_number': '1.000 [0.992,1.000] n=450', 'ship_date': '0.993 [0.981,0.998] n=450', 'conditions': '0.929 [0.901,0.949] n=450', 'line_qty': '0.996 [0.986,0.999] n=514', 'line_price': '0.998 [0.989,1.000] n=514'}
+   confusion gold->pred: {'confirm->confirm': 164, 'confirm->needs-human': 2, 'reject->reject': 50, 'needs-human->confirm': 1, 'needs-human->needs-human': 233}
+   slice behaviour: {'ambiguous': '1.00(n=37)', 'date_late': '0.95(n=22)', 'exact': '0.98(n=117)', 'exact_nodate': '1.00(n=38)', 'offtopic': '1.00(n=22)', 'partial': '1.00(n=13)', 'price_diff': '1.00(n=40)', 'qty_diff': '1.00(n=56)', 'reject': '1.00(n=50)', 'substitution': '1.00(n=23)', 'tol_price': '1.00(n=11)', 'unknown_po': '1.00(n=21)'}
+   slice style: {'chatty_typos': '1.00(n=73)', 'formal': '0.99(n=85)', 'forwarded_thread': '1.00(n=72)', 'line_by_line': '0.99(n=75)', 'table': '1.00(n=55)', 'terse': '0.99(n=90)'}
+   slice source: {'brla': '0.99(n=384)', 'oregon': '1.00(n=66)'}
+   slice n_lines: {'1': '0.99(n=292)', '2': '1.00(n=97)', '3': '1.00(n=43)', '4': '0.94(n=18)'}
+split=h2  items common to all systems: 449
+system              n doc acc [95% CI]         false-confirm [CI]       auto-recall [CI]         macroF1  lat s  abst
+s0-v1             449 0.929 [0.901,0.949]      0.034 [0.019,0.061]      0.865 [0.802,0.910]        0.941    0.0  0.00
+s2-7b-v3          449 0.991 [0.977,0.997]      0.003 [0.001,0.019]      0.981 [0.945,0.993]        0.989    2.1  0.00
+paired bootstrap s2-7b-v3 - s0-v1: diff=+0.062 95% CI [+0.040,+0.087]  P(diff<=0)=0.0000  n=449
+
+== s0-v1 fields: {'intent': '0.951 [0.927,0.967] n=449', 'po_number': '0.953 [0.930,0.969] n=449', 'ship_date': '0.991 [0.977,0.997] n=449', 'conditions': '0.944 [0.919,0.962] n=449', 'line_qty': '0.929 [0.905,0.947] n=563', 'line_price': '0.945 [0.923,0.961] n=563'}
+   confusion gold->pred: {'confirm->confirm': 134, 'confirm->needs-human': 21, 'reject->reject': 38, 'reject->needs-human': 1, 'needs-human->confirm': 10, 'needs-human->needs-human': 245}
+   slice behaviour: {'ambiguous': '1.00(n=18)', 'date_late': '0.96(n=28)', 'exact': '0.86(n=96)', 'exact_nodate': '0.81(n=27)', 'offtopic': '1.00(n=24)', 'partial': '1.00(n=22)', 'price_diff': '1.00(n=51)', 'qty_diff': '1.00(n=54)', 'reject': '0.97(n=39)', 'substitution': '0.84(n=25)', 'tol_price': '0.91(n=32)', 'unknown_po': '0.85(n=33)'}
+   slice style: {'chatty_typos': '0.82(n=51)', 'formal': '0.96(n=91)', 'forwarded_thread': '0.89(n=65)', 'line_by_line': '0.95(n=61)', 'table': '0.97(n=78)', 'terse': '0.93(n=103)'}
+   slice source: {'brla': '0.94(n=389)', 'oregon': '0.83(n=60)'}
+   slice n_lines: {'1': '0.91(n=291)', '2': '0.96(n=95)', '3': '0.98(n=41)', '4': '0.95(n=22)'}
+
+== s2-7b-v3 fields: {'intent': '0.996 [0.984,0.999] n=449', 'po_number': '0.993 [0.981,0.998] n=449', 'ship_date': '0.989 [0.974,0.995] n=449', 'conditions': '0.931 [0.904,0.951] n=449', 'line_qty': '0.996 [0.987,0.999] n=563', 'line_price': '0.996 [0.987,0.999] n=563'}
+   confusion gold->pred: {'confirm->confirm': 152, 'confirm->reject': 1, 'confirm->needs-human': 2, 'reject->reject': 39, 'needs-human->confirm': 1, 'needs-human->needs-human': 254}
+   slice behaviour: {'ambiguous': '1.00(n=18)', 'date_late': '1.00(n=28)', 'exact': '0.98(n=96)', 'exact_nodate': '0.96(n=27)', 'offtopic': '1.00(n=24)', 'partial': '1.00(n=22)', 'price_diff': '1.00(n=51)', 'qty_diff': '1.00(n=54)', 'reject': '1.00(n=39)', 'substitution': '0.96(n=25)', 'tol_price': '1.00(n=32)', 'unknown_po': '1.00(n=33)'}
+   slice style: {'chatty_typos': '0.98(n=51)', 'formal': '1.00(n=91)', 'forwarded_thread': '0.97(n=65)', 'line_by_line': '0.98(n=61)', 'table': '1.00(n=78)', 'terse': '1.00(n=103)'}
+   slice source: {'brla': '0.99(n=389)', 'oregon': '0.98(n=60)'}
+   slice n_lines: {'1': '0.99(n=291)', '2': '0.99(n=95)', '3': '1.00(n=41)', '4': '1.00(n=22)'}
+wrote canary-always_confirm 450
+wrote canary-always_human 450
+wrote canary-price_drift 450
+wrote canary-drop_last_line 450
+wrote canary-shuffled 450
+wrote control-oracle 450
+{
+  "feedback_n": 359,
+  "new_regression_fixtures": 2,
+  "leaked_h1_accuracy": 1.0,
+  "h2_accuracy": [
+    0.9910913140311804,
+    0.9773201155161613,
+    0.9965303434522728
+  ]
+}
+REPRODUCTION PASS: complete frozen predictions; all six controls behaved as specified.
+Candidate gate outcomes: {'h1': 'SHIP', 'h2': 'SHIP'}
+{
+  "h1": {
+    "n": 450,
+    "corrected_parse_fail_count": 1,
+    "corrected_parse_fail_rate": 0.0022222222222222222,
+    "validation_fail_count": 0
+  },
+  "h2": {
+    "n": 449,
+    "corrected_parse_fail_count": 1,
+    "corrected_parse_fail_rate": 0.0022271714922048997,
+    "validation_fail_count": 0
+  },
+  "fb": {
+    "n": 359,
+    "corrected_parse_fail_count": 1,
+    "corrected_parse_fail_rate": 0.002785515320334262,
+    "validation_fail_count": 0
+  }
+}
+CORRECTED ACCOUNTING PASS: no inference; original extractions/decisions preserved; >5% parse-failure control BLOCKS.
+RERUN PASS: historical replay + corrected post-opening accounting; no original files overwritten.

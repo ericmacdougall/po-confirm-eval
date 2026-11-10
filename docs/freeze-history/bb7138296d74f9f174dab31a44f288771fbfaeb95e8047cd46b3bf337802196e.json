@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "sha256": {
+    "data/cases.jsonl": "b1c6c78e26a794fb4bdbebaa6d55bc3ca0dae0c9eec692fa1115f434050db108",
+    "data/emails.jsonl": "7b3d934142aa4790e4038a1b611925685a1e81ef8569a99535366cbe231050c5",
+    "docs/GATE.json": "2342046fc17bb6cfa0cfcb8c814a40c623cd80a161345c7dce723482f4748dba",
+    "docs/MODELS.json": "95a0225ecc3d498477f5708370a15efc96dcf9013e63a79aee458fc117bfa65b",
+    "docs/PREREG.md": "66c87603ab659a8b364a32a4bc394689401bb7dac1038a3d4365cde3a4c3317c",
+    "docs/SELECTION.json": "4163a17182298366d5c371b51ec8d3b740dc211babf03fd099bf6bade1bb51af",
+    "requirements.txt": "4cd3b1fcab7e24c1ace287d3cd71fb78a1adf9fcfd2a15639c5569926689eebf",
+    "src/annotate_real.py": "cc3fd91712b1ebda290b56d598b36d0da15a361de8576839fd9f515ad17e4d25",
+    "src/audit_labels.py": "7883ee87c47ca71c14df4bf1033a778c34d80e69b0bc8ddbc77e393219943ae8",
+    "src/audit_report.py": "bd945e986d853ff228aa2760883b0bed587ec465441d1530d8eba8d84720b0ce",
+    "src/build_cases.py": "07ddefa65ad191c789691bd0ac5376b0216490a9c6bb4c5e88a628b249556c78",
+    "src/build_real_slice.py": "528294d0dd5fae796d980337f7b654e3f043057feb321010910af8ca8ecd60de",
+    "src/canaries.py": "da857db33f4e7d512bd2c739f0c9048acde5894ecd1f96b69bb6f2c342e8df49",
+    "src/common.py": "fccad987711889bd29ba3526c8548515aa937700ad9442802bda947b28195ba4",
+    "src/dbg_enron.py": "9a437b954e738cb58c09dae876916929d9e0c780b89d6ef90c072e1d7dffe2cf",
+    "src/dbg_gen.py": "b8e0af08f8c0e1e91b2fe2c147174faa4c77cf4917b5321cf0edc00f305c4a05",
+    "src/extractors.py": "c1b9e6ca6f80194cd66d060e761668212f4a8f935a25e840d79933e31c7a221f",
+    "src/feedback_leakage.py": "3637598032ee90c566dbf6771504d681f90428291e6f48ef175d7d13959a7b01",
+    "src/gate.py": "db622cd704041430d0b5dcb242be182caa0a73388e7dc9412e30696cbc9d673f",
+    "src/gen_emails.py": "a4aa3c02fcb880a9ed9ca30fc982e2a2c35770d41e8d2d57e0716521929210a2",
+    "src/metrics.py": "2a5504d090cddfc66f002656b45ebb7a4791bad6f042f3f97eb0e4c2f1d1f9d4",
+    "src/preregister.py": "dd3ce6025aa2477f22dbbd0356736268df7ac473a783b801d2b63a974dc46dbf",
+    "src/reproduce.py": "8411ec12e2374c7b68c3b9a4b3405b4e8164c807fdcef1a172400fd79a6843c0",
+    "src/run_system.py": "875be68a719de82a03ba0ac9377a367e3ac4e2d16ebdcb5de8de5379eda201c2",
+    "src/score.py": "bdab8181f9db9ab7b6022b33b4e9c66f1edb0ec578c96940236fdcfdadcb5339",
+    "src/show_disagreements.py": "655093c161d14ab2fb789b2941bfec930696477456ffd6657d09ce2bca70aaff",
+    "tests/test_evaluation_safety.py": "5dd3b295a0140da5657595973640b4ba0e17ab6ba46b8b4daddbcb237b6d7a9e",
+    "tests/test_preregistration.py": "19ad8e0c68a565c9d70dc72d48aa4a7452651796c09c9c1de74c2875b1e379d7"
+  }
+}

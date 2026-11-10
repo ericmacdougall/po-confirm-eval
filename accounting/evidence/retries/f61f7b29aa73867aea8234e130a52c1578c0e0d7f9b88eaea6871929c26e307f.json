@@ -1,0 +1,1 @@
+{"text": "```json\n{\n  \"po_number\": \"PO160541\",\n  \"intent\": \"confirm\",\n  \"conditions\": false,\n  \"ship_date\": \"2016-05-07\",\n  \"lines\": [\n    {\n      \"line\": 22B,\n      \"desc\": \"CONTRACT NUMBER 4400008332\",\n      \"qty\": 1,\n      \"unit_price\": 25584.13\n    }\n  ]\n}\n```", "tokens": 113, "latency_s": 2.12}

@@ -1,0 +1,53 @@
+{
+  "source_head": "a0c006af617110e7dc222c36bd2cabd272ee8111",
+  "git_archive_sha256": "b680658a592f13843c84cf4d786065a48949380692e9dc330fd0afc9cef770e2",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "rerun.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 32.29,
+      "log": "combined-replay.log",
+      "captured_log": "check0.log",
+      "captured_log_sha256": "289eda7568a2dfbdec3b5bc083d7fce8cf3cf50bfb7124b95f9a03dedb0f89bf",
+      "log_sha256": "2fd0da149709a319f5b2a196dfb420c3063b57b87d289f89dfa24f218edbcb04"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.11,
+      "log": "original-controls.log",
+      "captured_log": "check1.log",
+      "captured_log_sha256": "a42341d38cae216e9755a81d5c79b63a45598a1bc69b7ff59bcdbcf817d2ea37",
+      "log_sha256": "a42341d38cae216e9755a81d5c79b63a45598a1bc69b7ff59bcdbcf817d2ea37"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "accounting/tests",
+        "-v"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.67,
+      "log": "accounting-controls.log",
+      "captured_log": "check2.log",
+      "captured_log_sha256": "d5f8c410668b7de6574357a68bb44e65d3703f0066e3fb5be10736ac24fdd51d",
+      "log_sha256": "d5f8c410668b7de6574357a68bb44e65d3703f0066e3fb5be10736ac24fdd51d"
+    }
+  ],
+  "log_normalization": "Official redaction followed by removal of trailing blank lines for repository whitespace policy; original captured SHA also retained."
+}

@@ -1,0 +1,10 @@
+{
+  "candidate": "s2-7b-v3",
+  "system": "s2",
+  "prompt": "v2",
+  "model": "qwen2.5-7b-instruct-q4_k_m",
+  "baseline": "s0-v1",
+  "chosen_using": "dev only, 595 generated emails",
+  "dev_complete": true,
+  "reason": "Validated7B v2 initially lost refusals because the validator required unstated quantities on rejected lines. Dev error analysis identified and fixed that class-dependent validation bug. Cached dev replay with frozen v3 validator is99.5% accurate, zero unsafe confirms, gate passes. 3B fewshot fails safety and slice gates. No held-out predictions were read or generated."
+}

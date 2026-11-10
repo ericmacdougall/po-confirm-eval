@@ -1,0 +1,355 @@
+[
+  {
+    "id": "h1-01209",
+    "split": "h1",
+    "behaviour": "exact",
+    "style": "formal",
+    "gold": "confirm",
+    "predicted": "needs-human",
+    "claims": {
+      "conditions": true,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "HVAC REPLACEMENT ROOF TOP UNIT #3",
+          "line": 1,
+          "qty": 1.0,
+          "unit_price": 8650.0
+        }
+      ],
+      "po_number": "PO111143",
+      "ship_date": "2011-08-26"
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "HVAC REPLACEMENT ROOF TOP UNIT #3",
+          "line": 1,
+          "qty": 1,
+          "unit_price": 8650.0
+        }
+      ],
+      "po_number": "PO111143",
+      "ship_date": "2011-08-26"
+    }
+  },
+  {
+    "id": "h1-01179",
+    "split": "h1",
+    "behaviour": "date_late",
+    "style": "terse",
+    "gold": "needs-human",
+    "predicted": "confirm",
+    "claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "VAN, FORD TRANSIT WAGON 2016",
+          "line": null,
+          "qty": 2.0,
+          "unit_price": 26336.0
+        }
+      ],
+      "po_number": "PO151066",
+      "ship_date": null
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "VAN, FORD TRANSIT WAGON 2016",
+          "line": 1,
+          "qty": 2,
+          "unit_price": 26336.0
+        }
+      ],
+      "po_number": "PO151066",
+      "ship_date": "2015-11-15"
+    }
+  },
+  {
+    "id": "h1-01076",
+    "split": "h1",
+    "behaviour": "exact",
+    "style": "line_by_line",
+    "gold": "confirm",
+    "predicted": "needs-human",
+    "claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "SHELVING, PALLET STORAGE.",
+          "line": 1,
+          "qty": 1.0,
+          "unit_price": 1497.42
+        },
+        {
+          "desc": "DRIVE IN STORAGE (BACK WALL SHELVING STORAGE);",
+          "line": 2,
+          "qty": 1.0,
+          "unit_price": 2026.39
+        },
+        {
+          "desc": "SMALL ITEMS SUPPLY ROOM;",
+          "line": 3,
+          "qty": 1.0,
+          "unit_price": 3273.83
+        },
+        {
+          "desc": "SRT CAGE; OBLIQUES GARMENT RACK",
+          "line": 6,
+          "qty": 1.0,
+          "unit_price": 75.0
+        }
+      ],
+      "po_number": "PO131088",
+      "ship_date": "2013-07-03"
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "SHELVING, PALLET STORAGE.",
+          "line": 1,
+          "qty": 1,
+          "unit_price": 1497.42
+        },
+        {
+          "desc": "DRIVE IN STORAGE (BACK WALL SHELVING STORAGE);",
+          "line": 2,
+          "qty": 1,
+          "unit_price": 2026.39
+        },
+        {
+          "desc": "SMALL ITEMS SUPPLY ROOM; LINE 6",
+          "line": 3,
+          "qty": 1,
+          "unit_price": 3273.83
+        },
+        {
+          "desc": "SRT CAGE; OBLIQUES GARMENT RACK, LINE 6",
+          "line": 4,
+          "qty": 1,
+          "unit_price": 75.0
+        }
+      ],
+      "po_number": "PO131088",
+      "ship_date": "2013-07-03"
+    }
+  },
+  {
+    "id": "h2-01612",
+    "split": "h2",
+    "behaviour": "exact",
+    "style": "forwarded_thread",
+    "gold": "confirm",
+    "predicted": "needs-human",
+    "claims": {
+      "conditions": false,
+      "intent": "other",
+      "lines": [],
+      "po_number": null,
+      "ship_date": null
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "CONTRACT NUMBER 4400008332, LINE NUMBER 22B",
+          "line": 1,
+          "qty": 1,
+          "unit_price": 25584.13
+        }
+      ],
+      "po_number": "PO160541",
+      "ship_date": "2016-05-07"
+    }
+  },
+  {
+    "id": "h2-01462",
+    "split": "h2",
+    "behaviour": "exact",
+    "style": "line_by_line",
+    "gold": "confirm",
+    "predicted": "reject",
+    "claims": {
+      "conditions": true,
+      "intent": "reject",
+      "lines": [
+        {
+          "desc": "2-port GE WAN NIM, dual-mode RJ45 & SFP",
+          "line": 1,
+          "qty": 1.0,
+          "unit_price": 1353.33
+        }
+      ],
+      "po_number": "OR8959",
+      "ship_date": null
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "2-port GE WAN NIM, dual-mode RJ45 & SFP\n*Canceled original order and c",
+          "line": 1,
+          "qty": 1,
+          "unit_price": 1353.33
+        }
+      ],
+      "po_number": "OR8959",
+      "ship_date": "2017-04-16"
+    }
+  },
+  {
+    "id": "h2-01599",
+    "split": "h2",
+    "behaviour": "substitution",
+    "style": "forwarded_thread",
+    "gold": "needs-human",
+    "predicted": "confirm",
+    "claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "2017 FORD EDGE SEL",
+          "line": 1,
+          "qty": 1.0,
+          "unit_price": 23884.0
+        }
+      ],
+      "po_number": "PO170659",
+      "ship_date": "2017-05-16"
+    },
+    "construction_claims": {
+      "conditions": true,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "2017 FORD EXPLORER XLT",
+          "line": 1,
+          "qty": 1,
+          "subst": true,
+          "unit_price": 23884.0
+        }
+      ],
+      "po_number": "PO170659",
+      "ship_date": "2017-05-16"
+    }
+  },
+  {
+    "id": "h2-01786",
+    "split": "h2",
+    "behaviour": "exact_nodate",
+    "style": "chatty_typos",
+    "gold": "confirm",
+    "predicted": "needs-human",
+    "claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "TYPE CPI 4110-26FQ-120-OA-LBP",
+          "line": 21,
+          "qty": 1.0,
+          "unit_price": 2044.0
+        },
+        {
+          "desc": "AJ/92 GECF26DBX841-4P",
+          "line": null,
+          "qty": 4.0,
+          "unit_price": 7.84
+        }
+      ],
+      "po_number": "PO121516",
+      "ship_date": null
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "21-OE: TYPE CPI 4110-26FQ-120-OA-LBP",
+          "line": 1,
+          "qty": 1,
+          "unit_price": 2044.0
+        },
+        {
+          "desc": "AJ/92 GECF26DBX841-4P: F26DBX/841/ECO/4P",
+          "line": 2,
+          "qty": 4,
+          "unit_price": 7.84
+        }
+      ],
+      "po_number": "PO121516",
+      "ship_date": null
+    }
+  },
+  {
+    "id": "fb-01994",
+    "split": "fb",
+    "behaviour": "reject",
+    "style": "table",
+    "gold": "reject",
+    "predicted": "needs-human",
+    "claims": {
+      "conditions": false,
+      "intent": "other",
+      "lines": [],
+      "po_number": null,
+      "ship_date": null
+    },
+    "construction_claims": {
+      "conditions": false,
+      "intent": "reject",
+      "lines": [],
+      "po_number": "PO131725",
+      "ship_date": null
+    }
+  },
+  {
+    "id": "fb-02152",
+    "split": "fb",
+    "behaviour": "substitution",
+    "style": "formal",
+    "gold": "needs-human",
+    "predicted": "confirm",
+    "claims": {
+      "conditions": false,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "Microsoft Surface Hub 2S - touch surface - Core i5 - 8 GB - 128 GB - LCD",
+          "line": 1,
+          "qty": 1.0,
+          "unit_price": 9241.52
+        }
+      ],
+      "po_number": "OR9936",
+      "ship_date": "2017-12-26"
+    },
+    "construction_claims": {
+      "conditions": true,
+      "intent": "confirm",
+      "lines": [
+        {
+          "desc": "Microsoft Surface Hub - touch surface - Core i5 - 8 GB - 128\nGB - LCD ",
+          "line": 1,
+          "qty": 1,
+          "subst": true,
+          "unit_price": 9241.52
+        }
+      ],
+      "po_number": "OR9936",
+      "ship_date": "2017-12-26"
+    }
+  }
+]

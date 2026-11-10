@@ -1,0 +1,34 @@
+{
+  "scenario": "simulated support feedback on separate constructed email cases",
+  "n_feedback_cases": 359,
+  "n_errors": 2,
+  "feedback_error_rate": [
+    0.005571030640668524,
+    0.0015290773693023754,
+    0.020082557018816297
+  ],
+  "unique_new_regression_cases": 2,
+  "categories": {
+    "reject|table": 1,
+    "substitution|formal": 1
+  },
+  "tickets": [
+    {
+      "case_id": "fb-01994",
+      "gold": "reject",
+      "prediction": "needs-human",
+      "behaviour": "reject",
+      "style": "table"
+    },
+    {
+      "case_id": "fb-02152",
+      "gold": "needs-human",
+      "prediction": "confirm",
+      "behaviour": "substitution",
+      "style": "formal"
+    }
+  ],
+  "fixed_development_suite_n": 595,
+  "expanded_suite_n": 597,
+  "rule": "Add these failures to future development fixtures; H1/H2 remain frozen and cannot be retuned."
+}

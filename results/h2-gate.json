@@ -1,0 +1,29 @@
+{
+  "verdict": "SHIP",
+  "failures": [],
+  "info": {
+    "false_confirm": {
+      "point": 0.003401360544217687,
+      "upper": 0.019012449042384225
+    },
+    "accuracy_diff": {
+      "diff": 0.062360801781737196,
+      "lo": 0.0400890868596882,
+      "hi": 0.08685968819599109,
+      "p_le_0": 0.0,
+      "n": 449
+    },
+    "supplier_cluster_accuracy_diff": {
+      "diff": 0.062360801781737196,
+      "lo": 0.036585365853658534,
+      "hi": 0.09273182957393483,
+      "n_clusters": 271,
+      "replicates": 2000
+    },
+    "slice_violations": [],
+    "automation_recall": {
+      "candidate": 0.9806451612903225,
+      "baseline": 0.864516129032258
+    }
+  }
+}

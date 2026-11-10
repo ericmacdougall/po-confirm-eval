@@ -1,0 +1,46 @@
+{
+  "dev": {
+    "n": 150,
+    "parsed": 150,
+    "original_recorded_label_agreement": 150,
+    "current_policy_recomputed_label_agreement": 150,
+    "agreement_wilson": [
+      1.0,
+      0.9750288608542812,
+      1.0
+    ]
+  },
+  "h1": {
+    "n": 450,
+    "parsed": 450,
+    "original_recorded_label_agreement": 449,
+    "current_policy_recomputed_label_agreement": 450,
+    "agreement_wilson": [
+      1.0,
+      0.9915353726939092,
+      1.0
+    ]
+  },
+  "h2": {
+    "n": 449,
+    "parsed": 449,
+    "original_recorded_label_agreement": 449,
+    "current_policy_recomputed_label_agreement": 449,
+    "agreement_wilson": [
+      1.0,
+      0.9915166804463195,
+      1.0
+    ]
+  },
+  "pool": {
+    "n": 60,
+    "parsed": 60,
+    "original_recorded_label_agreement": 59,
+    "current_policy_recomputed_label_agreement": 60,
+    "agreement_wilson": [
+      1.0,
+      0.9398260695220669,
+      0.9999999999999999
+    ]
+  }
+}

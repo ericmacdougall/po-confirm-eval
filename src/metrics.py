@@ -12,8 +12,10 @@ RUNS = os.path.join(ROOT, "runs")
 
 
 def wilson(k, n, z=1.96):
+    if not (0 <= k <= n):
+        raise ValueError("Wilson counts require 0 <= k <= n")
     if n == 0:
-        return (0.0, 0.0, 0.0)
+        return (0.0, 0.0, 1.0)
     p = k / n
     d = 1 + z * z / n
     c = (p + z * z / (2 * n)) / d
@@ -24,6 +26,8 @@ def wilson(k, n, z=1.96):
 def paired_bootstrap(a, b, B=10000, seed=1):
     """a,b: per-item 0/1 (or float) vectors aligned by item. Returns (mean diff b-a, lo, hi, P(diff<=0))."""
     n = len(a)
+    if n == 0 or n != len(b) or B < 40:
+        raise ValueError("Bootstrap requires nonempty aligned samples and B >= 40")
     rng = random.Random(seed)
     d = [y - x for x, y in zip(a, b)]
     stats = []
@@ -36,6 +40,24 @@ def paired_bootstrap(a, b, B=10000, seed=1):
     return (sum(d) / n, stats[int(0.025 * B)], stats[int(0.975 * B) - 1], sum(1 for x in stats if x <= 0) / B)
 
 
+def paired_cluster_bootstrap(a, b, groups, B=2000, seed=1):
+    """Resample whole supplier clusters, retaining every PO in each drawn cluster."""
+    if not a or len(a) != len(b) or len(a) != len(groups) or B < 40:
+        raise ValueError("Cluster bootstrap requires aligned nonempty vectors")
+    clusters = defaultdict(list)
+    for x, y, group in zip(a, b, groups):
+        clusters[group].append(y - x)
+    values = [(sum(v), len(v)) for v in clusters.values()]
+    rng = random.Random(seed)
+    stats = []
+    for _ in range(B):
+        drawn = [values[rng.randrange(len(values))] for _ in values]
+        stats.append(sum(s for s, _ in drawn) / sum(n for _, n in drawn))
+    stats.sort()
+    return dict(diff=sum(y-x for x,y in zip(a,b))/len(a), lo=stats[int(.025*B)],
+                hi=stats[int(.975*B)-1], n_clusters=len(values), replicates=B)
+
+
 def load_cases():
     return {c["id"]: c for c in jl_read(os.path.join(DATA, "cases.jsonl"))}
 
@@ -44,6 +66,8 @@ def load_run(tag, split):
     rows = {}
     for p in glob.glob(os.path.join(RUNS, f"{tag}_{split}.shard*.jsonl")):
         for r in jl_read(p):
+            if r["id"] in rows:
+                raise ValueError("Duplicate run item: " + r["id"])
             rows[r["id"]] = r
     return rows
 
@@ -76,9 +100,15 @@ def field_scores(run_row, case):
 def evaluate(tag, split, cases=None, ids=None):
     cases = cases or load_cases()
     run = load_run(tag, split)
-    ids = sorted(ids or run.keys())
-    ids = [i for i in ids if i in run]
+    emails = {e["id"] for e in jl_read(os.path.join(DATA, "emails.jsonl"))}
+    ids = sorted(ids if ids is not None else (i for i in emails if cases[i]["split"] == split))
+    unexpected = set(run) - set(ids)
+    if unexpected:
+        raise ValueError("Unexpected run IDs for split: " + str(sorted(unexpected)[:3]))
+    missing = sorted(set(ids) - set(run))
+    run = {i: run.get(i, {"claims": None, "missing": True}) for i in ids}
     res = dict(tag=tag, split=split, n=len(ids))
+    res.update(observed_n=len(ids) - len(missing), missing_ids=missing)
     ok = [int(decide(run[i], cases[i]) == cases[i]["label"]) for i in ids]
     res["accuracy"] = wilson(sum(ok), len(ids))
     preds = {i: decide(run[i], cases[i]) for i in ids}
@@ -117,6 +147,7 @@ def evaluate(tag, split, cases=None, ids=None):
     sl["n_lines"] = {str(k): wilson(sum(v), len(v)) + (len(v),) for k, v in sorted(grp.items())}
     res["slices"] = sl
     res["ok_vector"] = dict(zip(ids, ok))
+    res["cluster_ids"] = {i: cases[i]["po"]["source"] + "|" + cases[i]["po"]["vendor"] for i in ids}
     lat = [run[i].get("latency_s", 0) for i in ids]
     res["latency_s_mean"] = sum(lat) / max(1, len(lat))
     res["abstain_rate"] = sum(1 for i in ids if run[i].get("abstained")) / max(1, len(ids))

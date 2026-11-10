@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import re
+import math
 from datetime import date, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -52,43 +53,48 @@ def toks(s):
 
 
 def match_lines(po_lines, claimed):
-    """Align claimed lines to ERP lines: by explicit line number, else by best token overlap.
-    Returns {erp_idx(1-based): claimed_line or None}."""
-    out = {}
+    """Align claimed lines to ERP lines: explicit line number first, then best score of token overlap plus a
+    price hint, then order when counts agree and nothing is numbered. Returns {erp_idx(1-based): claimed or None}.
+    (v1 used overlap only and wrongly rejected paraphrased descriptions: run log R04.)"""
+    out = {i: None for i in range(1, len(po_lines) + 1)}
     used = set()
-    for i, pl in enumerate(po_lines, 1):
-        hit = None
+    for i in out:
         for j, c in enumerate(claimed):
-            if j in used:
-                continue
-            if c.get("line") == i:
-                hit = j
+            if j not in used and c.get("line") == i:
+                out[i] = c
+                used.add(j)
                 break
-        if hit is None:
-            best, bj = 0.0, None
-            pt = toks(pl["desc"])
-            for j, c in enumerate(claimed):
-                if j in used or c.get("line") not in (None, 0):
-                    continue
-                ct = toks(c.get("desc", ""))
-                if not pt or not ct:
-                    continue
-                ov = len(pt & ct) / max(1, len(pt | ct))
-                if ov > best:
-                    best, bj = ov, j
-            if bj is not None and best >= 0.25:
-                hit = bj
-        if hit is not None:
-            used.add(hit)
-            out[i] = claimed[hit]
-        else:
-            out[i] = None
+    for i, pl in enumerate(po_lines, 1):
+        if out[i] is not None:
+            continue
+        pt = toks(pl["desc"])
+        best, bj = 0.0, None
+        for j, c in enumerate(claimed):
+            if j in used or c.get("line") not in (None, 0):
+                continue
+            ct = toks(c.get("desc", ""))
+            ov = len(pt & ct) / max(1, len(pt | ct)) if pt and ct else 0.0
+            p = _num(c.get("unit_price"))
+            hint = 0.5 if p is not None and abs(p - pl["unit_cost"]) <= PRICE_TOL * pl["unit_cost"] + 1e-9 else 0.0
+            if ov + hint > best:
+                best, bj = ov + hint, j
+        if bj is not None and best >= 0.25:
+            out[i] = claimed[bj]
+            used.add(bj)
+    if all(c.get("line") in (None, 0) for c in claimed) and len(claimed) == len(po_lines):
+        free = [j for j in range(len(claimed)) if j not in used]
+        for i in out:
+            if out[i] is None and free:
+                out[i] = claimed[free.pop(0)]
     return out
 
 
 def _num(x):
+    if isinstance(x, bool):
+        return None
     try:
-        return float(x)
+        value = float(x)
+        return value if math.isfinite(value) else None
     except (TypeError, ValueError):
         return None
 
@@ -98,16 +104,19 @@ def policy(claims, po):
     po: ERP record. Returns (label, reason)."""
     if not isinstance(claims, dict):
         return "needs-human", "no_claims"
+    if not isinstance(claims.get("po_number"), str) or claims["po_number"].strip().upper() != po["po_num"].upper():
+        return "needs-human", "po_number_mismatch_or_missing"
     intent = claims.get("intent")
     if intent == "reject":
         return "reject", "supplier_declines"
     if intent != "confirm":
         return "needs-human", "not_a_confirmation"
-    if (claims.get("po_number") or "").strip().upper() != po["po_num"].upper():
-        return "needs-human", "po_number_mismatch_or_missing"
     if claims.get("conditions"):
         return "needs-human", "conditions"
-    m = match_lines(po["lines"], claims.get("lines") or [])
+    lines = claims.get("lines")
+    if not isinstance(lines, list) or len(lines) != len(po["lines"]) or not all(isinstance(c, dict) for c in lines):
+        return "needs-human", "line_count_mismatch"
+    m = match_lines(po["lines"], lines)
     for i, pl in enumerate(po["lines"], 1):
         c = m[i]
         if c is None:
