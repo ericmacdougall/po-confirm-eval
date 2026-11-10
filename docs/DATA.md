@@ -9,10 +9,13 @@
 ## What is real and what is synthetic
 
 * ERP purchase orders: real public records (vendor names are businesses; vendor contact persons were never read into the cases).
-* **Supplier emails in the main evaluation are SYNTHETIC.** No labelled public corpus of supplier PO-confirmation emails exists.
+* **Supplier emails in the main evaluation are SYNTHETIC.** This experiment did not obtain a suitable public corpus pairing supplier-confirmation emails with ERP orders and gold labels.
   Each email was written by the `claude` CLI (Sonnet, subscription, no API key) from a spec whose facts are the gold claims, then
   checked programmatically (every stated number, PO number and date must appear in the text) and audited by a second model
   (see `docs/LABEL_AUDIT.md`).
-* The real-email slice is real text, labelled by two independent annotators (see `docs/REAL_SLICE.md`) and is reported separately
-  to show how far synthetic results transfer.
-* Enron mailbox owner names and email headers are not kept; only subject and body text, keyed by a hash.
+* The real-email slice contains real text and a partial model-versus-regex PO-number annotation. It is an exploratory, off-domain stress test, reported separately; it does not establish confirmation accuracy on actual supplier/ERP pairs.
+* Enron source text can contain personal details even after headers are dropped. The corpus and extracted subject/body text remain untracked; only aggregate results and retrieval recipes may be published. The CMU distributor asks users to respect the privacy of those involved.
+
+Publisher metadata was rechecked on 2026-11-10: Baton Rouge `licenseId=PUBLIC_DOMAIN`; Oregon `licenseId=USGOV_WORKS`, with its own terms link to usa.gov/government-works. The Oregon label is the publisher's assertion, not a deduction from state ownership. These snapshots describe what the publishers claimed at acquisition.
+
+The 2,160 PO cases are split by distinct source/order identifier: pool300, dev600, H1450, H2450, feedback360. Eight generated emails failed construction checks and were dropped: published email counts pool299, dev595, H1450, H2449, feedback359. The cases are sampled for this experiment; vendor and description overlap across splits limits claims about unseen suppliers. Synthetic sender names/signatures were invented by the generator.

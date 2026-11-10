@@ -189,9 +189,9 @@ def validate(claims, text):
     if claims["po_number"] and claims["po_number"] not in text:
         return f"po_number {claims['po_number']} does not appear in the email. Copy it exactly or use null."
     for l in claims["lines"]:
-        if not present(l["qty"]):
+        if (claims["intent"] == "confirm" or l["qty"] is not None) and not present(l["qty"]):
             return f"qty {l['qty']} does not appear in the email text. Use only stated numbers."
-        if not present(l["unit_price"]):
+        if (claims["intent"] == "confirm" or l["unit_price"] is not None) and not present(l["unit_price"]):
             return f"unit_price {l['unit_price']} does not appear in the email text. Use only stated numbers."
     if claims["ship_date"]:
         try:

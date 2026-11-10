@@ -40,6 +40,24 @@ def paired_bootstrap(a, b, B=10000, seed=1):
     return (sum(d) / n, stats[int(0.025 * B)], stats[int(0.975 * B) - 1], sum(1 for x in stats if x <= 0) / B)
 
 
+def paired_cluster_bootstrap(a, b, groups, B=2000, seed=1):
+    """Resample whole supplier clusters, retaining every PO in each drawn cluster."""
+    if not a or len(a) != len(b) or len(a) != len(groups) or B < 40:
+        raise ValueError("Cluster bootstrap requires aligned nonempty vectors")
+    clusters = defaultdict(list)
+    for x, y, group in zip(a, b, groups):
+        clusters[group].append(y - x)
+    values = [(sum(v), len(v)) for v in clusters.values()]
+    rng = random.Random(seed)
+    stats = []
+    for _ in range(B):
+        drawn = [values[rng.randrange(len(values))] for _ in values]
+        stats.append(sum(s for s, _ in drawn) / sum(n for _, n in drawn))
+    stats.sort()
+    return dict(diff=sum(y-x for x,y in zip(a,b))/len(a), lo=stats[int(.025*B)],
+                hi=stats[int(.975*B)-1], n_clusters=len(values), replicates=B)
+
+
 def load_cases():
     return {c["id"]: c for c in jl_read(os.path.join(DATA, "cases.jsonl"))}
 
@@ -129,6 +147,7 @@ def evaluate(tag, split, cases=None, ids=None):
     sl["n_lines"] = {str(k): wilson(sum(v), len(v)) + (len(v),) for k, v in sorted(grp.items())}
     res["slices"] = sl
     res["ok_vector"] = dict(zip(ids, ok))
+    res["cluster_ids"] = {i: cases[i]["po"]["source"] + "|" + cases[i]["po"]["vendor"] for i in ids}
     lat = [run[i].get("latency_s", 0) for i in ids]
     res["latency_s_mean"] = sum(lat) / max(1, len(lat))
     res["abstain_rate"] = sum(1 for i in ids if run[i].get("abstained")) / max(1, len(ids))

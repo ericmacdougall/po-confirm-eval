@@ -55,6 +55,11 @@ class EvaluationSafety(unittest.TestCase):
         self.assertIsNone(cl['lines'][0]['qty'])
         self.assertIsNone(cl['lines'][0]['unit_price'])
 
+    def test_supplier_refusal_needs_no_unstated_prices(self):
+        cl = normalise({"po_number": "PO12345", "intent": "reject", "lines": [
+            {"line": 1, "desc": "bolts", "qty": None, "unit_price": None}]})
+        self.assertIsNone(validate(cl, 'We cannot fill PO12345. The bolts are discontinued.'))
+
     def test_no_observations_is_not_zero_risk(self):
         self.assertEqual(wilson(0, 0), (0.0, 0.0, 1.0))
 

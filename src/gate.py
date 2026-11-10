@@ -17,7 +17,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from metrics import evaluate, load_cases, paired_bootstrap  # noqa: E402
+from metrics import evaluate, load_cases, paired_bootstrap, paired_cluster_bootstrap  # noqa: E402
 
 
 def gate(cand, base, spec, B=10000):
@@ -36,10 +36,16 @@ def gate(cand, base, spec, B=10000):
         fails.append(f"coverage: common={len(ids)}/{len(b['ok_vector'])} parse_fail={c['parse_fail_rate']:.3f}")
     d = paired_bootstrap([b["ok_vector"][i] for i in ids], [c["ok_vector"][i] for i in ids], B=B, seed=spec.get("seed", 1))
     info["accuracy_diff"] = dict(diff=d[0], lo=d[1], hi=d[2], p_le_0=d[3], n=len(ids))
-    if d[1] < -spec["max_regression"]:
-        fails.append(f"no_regress: diff CI lower {d[1]:+.3f} < -{spec['max_regression']}")
-    if spec.get("require_improvement") and d[1] <= 0:
-        fails.append(f"improvement: diff CI lower {d[1]:+.3f} <= 0")
+    lower = d[1]
+    if c.get("cluster_ids"):
+        cluster = paired_cluster_bootstrap([b["ok_vector"][i] for i in ids], [c["ok_vector"][i] for i in ids],
+                                          [c["cluster_ids"][i] for i in ids], seed=spec.get("seed", 1))
+        info["supplier_cluster_accuracy_diff"] = cluster
+        lower = min(lower, cluster["lo"])
+    if lower < -spec["max_regression"]:
+        fails.append(f"no_regress: conservative diff CI lower {lower:+.3f} < -{spec['max_regression']}")
+    if spec.get("require_improvement") and lower <= 0:
+        fails.append(f"improvement: conservative diff CI lower {lower:+.3f} <= 0")
     sl = []
     for k, v in c["slices"]["behaviour"].items():
         bv = b["slices"]["behaviour"].get(k)

@@ -4,8 +4,9 @@
   "max_regression": 0.01,
   "require_improvement": false,
   "slice_min_n": 20,
-  "slice_drop": 0.10,
+  "slice_drop": 0.1,
   "max_automation_drop": 0.03,
   "seed": 1,
-  "note": "PROVISIONAL until frozen into PREREG.sha256"
+  "note": "Illustrative research-package release gate, not authorization for automatic ERP confirmations. Frozen before held-out inference.",
+  "min_n": 400
 }

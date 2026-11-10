@@ -17,7 +17,7 @@ def frozen_paths():
     paths = list((ROOT_PATH / "src").glob("*.py"))
     paths += list((ROOT_PATH / "tests").glob("*.py"))
     paths += [ROOT_PATH / p for p in ("data/cases.jsonl", "data/emails.jsonl", "docs/GATE.json",
-                                     "docs/PREREG.md", "docs/MODELS.json", "requirements.txt")]
+                                     "docs/PREREG.md", "docs/MODELS.json", "docs/SELECTION.json", "requirements.txt")]
     return sorted(str(p.relative_to(ROOT_PATH)) for p in paths)
 
 

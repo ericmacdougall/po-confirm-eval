@@ -16,7 +16,7 @@ class FreezeSafety(unittest.TestCase):
         for directory in ("src", "tests", "data", "docs", "runs"):
             (self.root / directory).mkdir()
         for name in ("src/system.py", "tests/test_system.py", "data/cases.jsonl", "data/emails.jsonl",
-                     "docs/GATE.json", "docs/PREREG.md", "docs/MODELS.json", "requirements.txt"):
+                     "docs/GATE.json", "docs/PREREG.md", "docs/MODELS.json", "docs/SELECTION.json", "requirements.txt"):
             (self.root / name).write_text("frozen\n")
         p1 = patch.object(preregister, "ROOT_PATH", self.root)
         p2 = patch.object(preregister, "MANIFEST", self.root / "docs/PREREG.manifest.json")

@@ -45,7 +45,7 @@ def main():
                 print(f"   slice {dim}:", {k: f"{v[0]:.2f}(n={v[3]})" for k, v in d.items()})
     if a.out:
         os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
-        json.dump({t: {k: v for k, v in r.items() if k != "ok_vector"} for t, r in res.items()}, open(a.out, "w"), indent=1)
+        json.dump({t: {k: v for k, v in r.items() if k not in ("ok_vector", "cluster_ids")} for t, r in res.items()}, open(a.out, "w"), indent=1)
 
 
 if __name__ == "__main__":
